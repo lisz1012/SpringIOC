@@ -6,6 +6,10 @@ public class Person {
     private String age;
     private String gender;
 
+    public Person() {
+        System.out.println("Person 被创建");
+    }
+
     public void setId(int id) {
         this.id = id;
     }
