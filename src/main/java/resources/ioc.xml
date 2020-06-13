@@ -2,11 +2,52 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <!-- xml麻烦，但是真中配置方式比较完整 -->
+    <!-- 根据属性值设定的时候，name的名称取决于set方法后面的Xxx首字母小写的名称 -->
+    <!-- 日常工作中一般使用name的方式，很少使用index和type的方式，但要注意各种情况会出现的问题 -->
+    <!-- name表示参数面，value表示实际的具体值，type表示值的类型，index表示在constructor中的下标，从0开始 -->
     <bean id="person" class="com.lisz.bean.Person">
         <property name="id" value="1" />
         <property name="name" value="zhangsan" />
         <property name="age" value="20" />
         <property name="gender" value="男" />
-
+        <property name="date" value="2020/01/21" />
+    </bean>
+    <bean id="person2" class="com.lisz.bean.Person">
+        <property name="id" value="2" />
+        <property name="name" value="zhangsan2" />
+        <property name="age" value="22" />
+        <property name="gender" value="女" />
+        <property name="date" value="2020/01/21" />
+    </bean>
+    <!-- 使用构造器方法复制的时候，constructor-arg的name属性是由构造方法参数列表的名称决定的 -->
+    <bean id="person3" class="com.lisz.bean.Person">
+        <constructor-arg name="id" value="3" />
+        <constructor-arg name="name" value="lisi" />
+        <constructor-arg name="age" value="20" />
+        <constructor-arg name="gender" value="男" />
+        <constructor-arg name="date" value="2020/01/21" />
+    </bean>
+    <!-- 使用构造器方法复制的时候，constructor-arg的name属性名可以省略，但要注意顺序要跟参数列表的顺序一致 -->
+    <bean id="person4" class="com.lisz.bean.Person">
+        <constructor-arg value="3" />
+        <constructor-arg value="abc" />
+        <constructor-arg value="21" />
+        <constructor-arg value="男" />
+        <constructor-arg value="2020/01/21" />
+    </bean>
+    <!-- 使用构造器方法复制的时候，constructor-arg的name属性可以名省略，但要注意顺序要跟参数列表的顺序一致 乱序了的话要标注index-->
+    <bean id="person5" class="com.lisz.bean.Person">
+        <constructor-arg value="男" index="3"/>
+        <constructor-arg value="4" index="0"/>
+        <constructor-arg value="abc" index="1"/>
+        <constructor-arg value="21" index="2"/>
+        <constructor-arg value="2020/01/21" />
+    </bean>
+    <!-- 两个构造方法参数个数相同的话，会覆盖，避免覆盖，在value后面再写type，指定参数类型，id一般用Integer而不是int -->
+    <bean id="person6" class="com.lisz.bean.Person">
+        <constructor-arg value="5" />
+        <constructor-arg value="abc" />
+        <constructor-arg value="21" />
     </bean>
 </beans>
