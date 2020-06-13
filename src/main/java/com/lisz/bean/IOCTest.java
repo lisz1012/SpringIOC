@@ -37,5 +37,13 @@ public class IOCTest {
         /*bean标签里写 abstract="true"会报错，抽象的，无法实例化*/
         Person parent = context.getBean("parent", Person.class);
         System.out.println(parent);
+        // scope="singleton/prototype"测试
+        Person person10 = context.getBean("person10", Person.class);
+        Person person11 = context.getBean("person10", Person.class);
+        System.out.println(person10 == person11);
+        Person staticPerson = context.getBean("staticPerson", Person.class);
+        System.out.println(staticPerson);
+        Person instancePerson = context.getBean("instancePerson", Person.class);
+        System.out.println(instancePerson);
     }
 }

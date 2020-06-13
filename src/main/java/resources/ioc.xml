@@ -171,4 +171,24 @@
     一般在实际工作中不必在意这个顺序，无论谁先创建，需要依赖的对象在创建完成之后都会进行赋值操作-->
     <bean id="address5" class="com.lisz.bean.Address" depends-on="person9"/>
     <bean id="person9" class="com.lisz.bean.Person" />
+
+    <!-- 设置bean对象的作用域。通过scope属性指定
+     singleton 单例（默认）
+     prototype 原型，多例模式，从IOC容器中获取的对象，每次都是新创建的
+     request(spring 4.x): 每次请求都会有一个新的对象（从来没用过，因此被淘汰）
+     session(spring 4.x): 每一次会话都会有一个新的（从来没用过，因此被淘汰）
+     注意：如果是singleton作用域，每次在创建IOC容器完成之前，此对象已经创建完成
+          如果是prototype作用域，每次是在需要用到新对象的时候才会创建-->
+    <bean id="person10" class="com.lisz.bean.Person" scope="prototype" />
+
+    <!-- 静态工厂方法创建类 -->
+    <bean id="staticPerson" class="com.lisz.factory.PersonStaticFactory" factory-method="getInstance">
+        <constructor-arg value="zhangsan"/>
+    </bean>
+
+    <!-- 实例工厂方法创建类. 先创建工厂的实例，然后再调用实例的工厂方法 -->
+    <bean id="personInstanceFactory" class="com.lisz.factory.PersonInstanceFactory" />
+    <bean id="instancePerson" factory-bean="personInstanceFactory" factory-method="getInstance">
+        <constructor-arg value="lisi" />
+    </bean>
 </beans>
