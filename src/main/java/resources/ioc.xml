@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--  -->
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
     <!-- xml麻烦，但是真中配置方式比较完整 -->
     <!-- 根据属性值设定的时候，name的名称取决于set方法后面的Xxx首字母小写的名称 -->
@@ -50,4 +52,123 @@
         <constructor-arg value="abc" />
         <constructor-arg value="21" />
     </bean>
+    <!-- 使用p命名空间给属性赋值(用得很少) -->
+    <bean id="person7" class="com.lisz.bean.Person" p:id="7" p:name="wangwu" p:age="12" p:gender="女" p:date="2020/02/01" />
+    <!-- 给复杂类型进行赋值操作 -->
+    <bean id="person8" class="com.lisz.bean.Person">
+        <property name="id" value="8" />
+        <property name="name" value="zhangsan" />
+        <property name="age" value="27" />
+        <property name="gender" value="男" />
+        <property name="date" value="2020/01/31" />
+        <property name="hobbies">
+            <array>
+                <value>Soccer</value>
+                <value>Dancing</value>
+                <value>Cooking</value>
+            </array>
+        </property>
+        <property name="address" ref="address"></property>
+        <property name="list">
+            <list>
+                <value>A</value>
+                <value>B</value>
+                <value>C</value>
+            </list>
+        </property>
+        <property name="addresses">
+            <list>
+                <!-- 外部bean，代码里可以随意从IOC容器中引用到 -->
+                <ref bean="address1" />
+                <ref bean="address2" />
+                <ref bean="address3" />
+                <!-- list内部bean，代码里不可以从IOC容器中引用到 -->
+                <bean id="address4" class="com.lisz.bean.Address">
+                    <property name="province" value="火星" />
+                    <property name="city" value="火星城市1" />
+                    <property name="town" value="C区" />
+                </bean>
+            </list>
+        </property>
+        <property name="set">
+            <set>
+                <value>1</value>
+                <value>2</value>
+                <value>3</value>
+                <value>3</value><!--set无重复-->
+            </set>
+        </property>
+        <property name="map">
+            <map>
+                <entry key="1" value="A" />
+                <entry key="2" value-ref="address1" />
+                <entry key="3">
+                    <bean class="com.lisz.bean.Address">
+                        <property name="province" value="湖北" />
+                        <property name="city" value="武汉" />
+                        <property name="town" value="江北" />
+                    </bean>
+                </entry>
+                <entry>
+                    <key><value>hehe</value></key>
+                    <value>haha</value>
+                </entry>
+                <entry>
+                    <key><value>hehe</value></key>
+                    <value>haha</value>
+                </entry>
+                <entry key="list">
+                    <list>
+                        <value>1</value>
+                        <value>2</value>
+                    </list>
+                </entry>
+            </map>
+        </property>
+        <property name="properties">
+            <props>
+                <prop key="a">A</prop>
+                <prop key="b">B</prop>
+                <prop key="c">C</prop>
+            </props>
+        </property>
+    </bean>
+    <bean id="address" class="com.lisz.bean.Address">
+        <property name="province" value="山东" />
+        <property name="city" value="济南" />
+        <property name="town" value="历下" />
+    </bean>
+    <bean id="address1" class="com.lisz.bean.Address">
+        <property name="province" value="北京" />
+        <property name="city" value="东城" />
+        <property name="town" value="aaa" />
+    </bean>
+    <bean id="address2" class="com.lisz.bean.Address">
+        <property name="province" value="上海" />
+        <property name="city" value="上海" />
+        <property name="town" value="上海某区" />
+    </bean>
+    <bean id="address3" class="com.lisz.bean.Address">
+        <property name="province" value="华盛顿" />
+        <property name="city" value="西雅图" />
+        <property name="town" value="Shoreline" />
+    </bean>
+
+    <!-- bean之间的继承 -->
+    <bean id="parent" class="com.lisz.bean.Person" abstract="false">
+        <property name="id" value="1" />
+        <property name="name" value="zhangsan" />
+        <property name="age" value="20" />
+        <property name="gender" value="男" />
+        <property name="date" value="2020/01/21" />
+    </bean>
+    <!-- 可以通过parent属性来获取父bean中的某些属性 -->
+    <bean id="child" class="com.lisz.bean.Person" parent="parent">
+        <property name="name" value="haha"/>
+    </bean>
+
+    <!-- 创建bean时的依赖关系，创建的顺序和bean在这个xml文件里定义的顺序是一样的 就想让address5先于person9创建
+    一般在实际工作中不必在意这个顺序，无论谁先创建，需要依赖的对象在创建完成之后都会进行赋值操作-->
+    <bean id="address5" class="com.lisz.bean.Address" depends-on="person9"/>
+    <bean id="person9" class="com.lisz.bean.Person" />
 </beans>

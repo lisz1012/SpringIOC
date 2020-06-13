@@ -1,6 +1,6 @@
 package com.lisz.bean;
 
-import java.util.Date;
+import java.util.*;
 
 public class Person {
     private int id;
@@ -8,6 +8,13 @@ public class Person {
     private int age;
     private String gender;
     private Date date;
+    private String hobbies[];
+    private Address address;
+    private List<String> list;
+    private List<Address> addresses;
+    private Set<String> set;
+    private Map<String, Object> map;
+    private Properties properties;
 
     // 当从从其中获取对象的时候，最好是保留无参数的构造方法，因为Spring是通过反射初始化bean的
     public Person() {
@@ -78,6 +85,62 @@ public class Person {
         this.date = date;
     }
 
+    public String[] getHobbies() {
+        return hobbies;
+    }
+
+    public void setHobbies(String[] hobbies) {
+        this.hobbies = hobbies;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
+    }
+
+    public List<String> getList() {
+        return list;
+    }
+
+    public void setList(List<String> list) {
+        this.list = list;
+    }
+
+    public Set<String> getSet() {
+        return set;
+    }
+
+    public void setSet(Set<String> set) {
+        this.set = set;
+    }
+
+    public Map<String, Object> getMap() {
+        return map;
+    }
+
+    public void setMap(Map<String, Object> map) {
+        this.map = map;
+    }
+
+    public Properties getProperties() {
+        return properties;
+    }
+
+    public void setProperties(Properties properties) {
+        this.properties = properties;
+    }
+
+    public List<Address> getAddresses() {
+        return addresses;
+    }
+
+    public void setAddresses(List<Address> addresses) {
+        this.addresses = addresses;
+    }
+
     @Override
     public String toString() {
         return "Person{" +
@@ -86,6 +149,14 @@ public class Person {
                 ", age=" + age +
                 ", gender='" + gender + '\'' +
                 ", date=" + date +
+                ", hobbies=" + Arrays.toString(hobbies) +
+                ", address=" + address +
+                ", list=" + list +
+                ", addresses=" + addresses +
+                ", set=" + set +
+                ", map=" + map +
+                ", properties=" + properties +
                 '}';
     }
 }
+

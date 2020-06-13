@@ -25,5 +25,17 @@ public class IOCTest {
         System.out.println(person5);
         Person person6 = context.getBean("person6", Person.class);
         System.out.println(person6);
+        Person person7 = context.getBean("person7", Person.class);
+        System.out.println(person7);
+        Person person8 = context.getBean("person8", Person.class);
+        System.out.println(person8);
+        /*报错，无法使用list标签里面定义的内部bean
+        Address address4 = context.getBean("address4", Address.class);
+        System.out.println(address4);*/
+        Person child = context.getBean("child", Person.class);
+        System.out.println(child);
+        /*bean标签里写 abstract="true"会报错，抽象的，无法实例化*/
+        Person parent = context.getBean("parent", Person.class);
+        System.out.println(parent);
     }
 }
