@@ -1,12 +1,13 @@
 package com.lisz.bean;
 
+import com.alibaba.druid.pool.DruidDataSource;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 // 容器中的对象是什么时候创建的？
 // 在容器创建完成之前就创建好了（懒加载先不考虑）
 public class IOCTest {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception{
         // 对于Maven项目，要把ioc.xml放在resources资源目录里才能找得到. ApplicationContext是IOC容器的入口
         // 创建该类才能拿对象，他有两个子类实现：ClassPathXmlApplicationContext表示从classpath读数据，常用
         // FileSystemXmlApplicationContext表示从当前文件系统读数据。默认容器启动之后Person对象就已经创建完成了
@@ -45,5 +46,26 @@ public class IOCTest {
         System.out.println(staticPerson);
         Person instancePerson = context.getBean("instancePerson", Person.class);
         System.out.println(instancePerson);
+        //Person myBeanFactoryPerson = context.getBean("myBeanFactory", Person.class);
+        //System.out.println(myBeanFactoryPerson);
+        Person person12 = context.getBean("person12", Person.class);
+        System.out.println(person12);
+        DruidDataSource dataSource = context.getBean("dataSource", DruidDataSource.class);
+        System.out.println(dataSource);
+        System.out.println(dataSource.getConnection());
+        DruidDataSource dataSource2 = context.getBean("dataSource2", DruidDataSource.class);
+        System.out.println(dataSource2);
+        System.out.println(dataSource2.getConnection());
+
+        Person person13 = context.getBean("person13", Person.class);
+        System.out.println(person13);
+
+        Person person14 = context.getBean("person14", Person.class);
+        System.out.println(person14);
+
+        Person person15 = context.getBean("person15", Person.class);
+        System.out.println(person15);
+
+        ((ClassPathXmlApplicationContext)context).close();
     }
 }

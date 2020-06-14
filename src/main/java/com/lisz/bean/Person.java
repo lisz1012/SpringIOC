@@ -21,6 +21,16 @@ public class Person {
         System.out.println("Person 被创建");
     }
 
+    public Person(Address address) {
+        this.address = address;
+    }
+
+    public Person(int id, String name, Address address) {
+        this.id = id;
+        this.name = name;
+        this.address = address;
+    }
+
     public Person(int id, String name, int age, String gender, Date date) {
         this.id = id;
         this.name = name;
@@ -139,6 +149,16 @@ public class Person {
 
     public void setAddresses(List<Address> addresses) {
         this.addresses = addresses;
+    }
+
+    public void init() {
+        // 初始化代码...
+        System.out.println("Initialized ... ... ");
+    }
+
+    public void destroy() {
+        // 销毁代码...
+        System.out.println("Destroyed ... ... ");
     }
 
     @Override

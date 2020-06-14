@@ -3,7 +3,11 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:p="http://www.springframework.org/schema/p"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd">
     <!-- xml麻烦，但是真中配置方式比较完整 -->
     <!-- 根据属性值设定的时候，name的名称取决于set方法后面的Xxx首字母小写的名称 -->
     <!-- 日常工作中一般使用name的方式，很少使用index和type的方式，但要注意各种情况会出现的问题 -->
@@ -181,14 +185,90 @@
           如果是prototype作用域，每次是在需要用到新对象的时候才会创建-->
     <bean id="person10" class="com.lisz.bean.Person" scope="prototype" />
 
-    <!-- 静态工厂方法创建类 -->
+    <!-- 静态工厂方法创建类 静态工厂比较死板单一 -->
     <bean id="staticPerson" class="com.lisz.factory.PersonStaticFactory" factory-method="getInstance">
         <constructor-arg value="zhangsan"/>
     </bean>
 
-    <!-- 实例工厂方法创建类. 先创建工厂的实例，然后再调用实例的工厂方法 -->
+    <!-- 实例工厂方法创建类. 先创建工厂的实例，然后再调用实例的工厂方法
+    class="com.lisz.bean.Person"可以省略 实例工厂的扩展会比较完善.-->
     <bean id="personInstanceFactory" class="com.lisz.factory.PersonInstanceFactory" />
     <bean id="instancePerson" factory-bean="personInstanceFactory" factory-method="getInstance">
         <constructor-arg value="lisi" />
+    </bean>
+
+    <!-- FactoryBean可以让用户自己创建Bean让后交给Spring来控制. 这个
+    接口的实现类，Spring都会将其作为一个工厂，但是在IOC容器启动的时候不会
+    创建实例，只有在使用的时候才会创建对象。这种方式是spring在创建对象时的
+     一种补充，用户可以按照自己需求创建对象，并将其交由spring IOC进行管理。
+     自己用的时候用的不多-->
+    <bean id="myBeanFactory" class="com.lisz.factory.MyFactoryBean" />
+
+    <!-- 生命周期方法调用
+    init-method: 在对象创建完成之后会调用这里指定的初始化方法
+    destroy-method：在容器关闭的时候会调用这里指定的销毁方法
+    要强制转换：((ClassPathXmlApplicationContext)context).close();
+    才能调用close()，看到destroy方法的调用结果.如果scope是singleton，初始化
+    和销毁方法都会被调用，如果是scope是prototype，则只会调用初始化方法-->
+    <bean id="person12" class="com.lisz.bean.Person" init-method="init" destroy-method="destroy">
+        <property name="id" value="4" />
+        <property name="name" value="aaa" />
+    </bean>
+
+    <!-- spring中包含一个BeanPostProcessor接口，可以在bean的初始化方法的前后调用该方法，
+     如果配置了初始化方法的前置和后置处理器，无论是否包含初始化方法，都会进行调用, 对所有的
+     bean对象（包括上面说的Factory）都生效。如果想对具体的类型或者bean实例做操作，则
+     在postProcessBeforeInitialization和postProcessBeforeInitialization中做判断-->
+    <bean id="myBeanPostProcessor" class="com.lisz.bean.MyBeanPostProcessor" />
+
+    <!-- Spring管理第三方bean,没启动MySQL会报错 -->
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource">
+        <property name="username" value="root" />
+        <property name="password" value="^abc123$" />
+        <property name="url" value="jdbc:mysql://localhost:3306/ssm" />
+        <property name="driverClassName" value="com.mysql.cj.jdbc.Driver" />
+    </bean>
+
+    <!-- 当需要引入外部的配置文件的时候需要导入context的命名空间，就是告诉IOC配置文件的路径:
+    在beansxmlns那里加上一行：xmlns:context="http://www.springframework.org/schema/context"
+    在schemaLocation="..."里加上两行：
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context.xsd-->
+    <context:property-placeholder location="classpath:db.properties" /> <!-- location="db.properties"也行 -->
+    <!-- 最好在配置文件中添加前缀，用来跟系统环境变量名区分 -->
+    <bean id="dataSource2" class="com.alibaba.druid.pool.DruidDataSource">
+        <property name="username" value="${username}" />
+        <property name="password" value="${password}" />
+        <property name="url" value="${url}" />
+        <property name="driverClassName" value="${driverClassName}" />
+    </bean>
+
+    <!-- 自动装配 -->
+    <bean id="address4" class="com.lisz.bean.Address">
+        <property name="province" value="山东" />
+        <property name="city" value="青岛" />
+        <property name="town" value="市南" />
+    </bean>
+    <!-- default: 不自动装配
+         byName: 按照setter中set后面的的名字首字母小写设置的（最常用，一般就用这个）
+         byType: 按照类型, 一旦多个相同类型的bean会报错。List<Address> Map<Address>也会自动注入
+         constructor：按照构造器进行装配，先按照有参构造器参数的类型进行装配，没有就直接装配null；如果按照类型
+                      找到了多个，那么就使用参数名作为id继续装配，找到就装配，找不到就装配null
+         -->
+    <bean id="person13" class="com.lisz.bean.Person" autowire="byName" />
+    <bean id="person14" class="com.lisz.bean.Person" autowire="constructor" />
+
+    <!-- SpEL，用的不多，注解为主 -->
+    <bean id="person15" class="com.lisz.bean.Person">
+        <!-- 可以引入bean对象的属性 -->
+        <property name="name" value="#{address.province}" />
+        <!-- 支持运算 -->
+        <property name="age" value="#{12*2}" />
+        <!-- 引入外部bean -->
+        <property name="address" value="#{address}" /> <!-- ref="address"-->
+        <!-- 调用静态方法 -->
+        <property name="gender" value="#{T(java.util.UUID).randomUUID().toString().substring(0, 5)}" />
+        <!-- 调用非静态方法, 要有个bean，id叫做address -->
+        <property name="hobbies" value="#{address.getCity()}" />
     </bean>
 </beans>
