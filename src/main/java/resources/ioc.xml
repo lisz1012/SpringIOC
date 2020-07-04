@@ -159,7 +159,7 @@
         <property name="town" value="Shoreline" />
     </bean>
 
-    <!-- bean之间的继承 -->
+    <!-- bean之间的继承 abstract="true"之后就无法实例化了-->
     <bean id="parent" class="com.lisz.bean.Person" abstract="false">
         <property name="id" value="1" />
         <property name="name" value="zhangsan" />
