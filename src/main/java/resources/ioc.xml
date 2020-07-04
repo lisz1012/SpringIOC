@@ -172,7 +172,7 @@
         <property name="name" value="haha"/>
     </bean>
 
-    <!-- 创建bean时的依赖关系，创建的顺序和bean在这个xml文件里定义的顺序是一样的 就想让address5先于person9创建
+    <!-- 创建bean时的依赖关系，创建的顺序和bean在这个xml文件里定义的顺序是一样的 depends-on就想让person9先于address5创建
     一般在实际工作中不必在意这个顺序，无论谁先创建，需要依赖的对象在创建完成之后都会进行赋值操作-->
     <bean id="address5" class="com.lisz.bean.Address" depends-on="person9"/>
     <bean id="person9" class="com.lisz.bean.Person" />
