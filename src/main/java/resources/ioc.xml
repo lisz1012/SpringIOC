@@ -216,8 +216,9 @@
         <property name="name" value="aaa" />
     </bean>
 
-    <!-- spring中包含一个BeanPostProcessor接口，可以在bean的初始化方法的前后调用该方法，
-     如果配置了初始化方法的前置和后置处理器，无论是否包含初始化方法，都会进行调用, 对所有的
+    <!-- spring中包含一个BeanPostProcessor接口，可以在bean的初始化方法init-method的前后调用该方法，
+     如果配置了初始化方法的前置和后置处理器，无论是否包含初始化方法，都会进行调用, init-method
+     指定的方法会在构造方法执行之后被调用，所以这两个方法都是在构造方法之后被执行，对所有的
      bean对象（包括上面说的Factory）都生效。如果想对具体的类型或者bean实例做操作，则
      在postProcessBeforeInitialization和postProcessBeforeInitialization中做判断-->
     <bean id="myBeanPostProcessor" class="com.lisz.bean.MyBeanPostProcessor" />
@@ -238,7 +239,7 @@
     <context:property-placeholder location="classpath:db.properties" /> <!-- location="db.properties"也行 -->
     <!-- 最好在配置文件中添加前缀，用来跟系统环境变量名区分 -->
     <bean id="dataSource2" class="com.alibaba.druid.pool.DruidDataSource">
-        <property name="username" value="${username}" />
+        <property name="username" value="${username}" /> <!-- 从上面的db.properties中取值 -->
         <property name="password" value="${password}" />
         <property name="url" value="${url}" />
         <property name="driverClassName" value="${driverClassName}" />
@@ -255,6 +256,7 @@
          byType: 按照类型, 一旦多个相同类型的bean会报错。List<Address> Map<Address>也会自动注入
          constructor：按照构造器进行装配，先按照有参构造器参数的类型进行装配，没有就直接装配null；如果按照类型
                       找到了多个，那么就使用参数名作为id继续装配，找到就装配，找不到就装配null
+         autowire属性就省去了ref指定装配哪个bean进来
          -->
     <bean id="person13" class="com.lisz.bean.Person" autowire="byName" />
     <bean id="person14" class="com.lisz.bean.Person" autowire="constructor" />
