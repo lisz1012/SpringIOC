@@ -180,8 +180,8 @@
     <!-- 设置bean对象的作用域。通过scope属性指定
      singleton 单例（默认）
      prototype 原型，多例模式，从IOC容器中获取的对象，每次都是新创建的
-     request(spring 4.x): 每次请求都会有一个新的对象（从来没用过，因此被淘汰）
-     session(spring 4.x): 每一次会话都会有一个新的（从来没用过，因此被淘汰）
+     request(<=spring 4.x): 每次请求都会有一个新的对象（从来没用过，因此被淘汰）
+     session(<=spring 4.x): 每一次会话都会有一个新的（从来没用过，因此被淘汰）
      注意：如果是singleton作用域，每次在创建IOC容器完成之前，此对象已经创建完成
           如果是prototype作用域，每次是在需要用到新对象的时候才会创建-->
     <bean id="person10" class="com.lisz.bean.Person" scope="prototype" />
