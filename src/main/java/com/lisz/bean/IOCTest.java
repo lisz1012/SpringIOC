@@ -46,6 +46,7 @@ public class IOCTest {
         System.out.println(staticPerson);
         Person instancePerson = context.getBean("instancePerson", Person.class);
         System.out.println(instancePerson);
+        //用beanFactory的id取得Person对象
         //Person myBeanFactoryPerson = context.getBean("myBeanFactory", Person.class);
         //System.out.println(myBeanFactoryPerson);
         Person person12 = context.getBean("person12", Person.class);

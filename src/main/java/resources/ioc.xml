@@ -180,8 +180,8 @@
     <!-- 设置bean对象的作用域。通过scope属性指定
      singleton 单例（默认）
      prototype 原型，多例模式，从IOC容器中获取的对象，每次都是新创建的
-     request(<=spring 4.x): 每次请求都会有一个新的对象（从来没用过，因此被淘汰）
-     session(<=spring 4.x): 每一次会话(默认30分钟)都会有一个新的（从来没用过，因此被淘汰）
+     request(<=spring 4.x): 每次请求都会有一个新的对象（从来没用过，因此在5版本之后被淘汰）
+     session(<=spring 4.x): 每一次会话(默认30分钟)都会有一个新的（从来没用过，因此在5版本之后被淘汰）
      注意：如果是singleton作用域，每次在创建IOC容器完成之前，此对象已经创建完成
           如果是prototype作用域，每次是在需要用到新对象的时候才会创建-->
     <bean id="person10" class="com.lisz.bean.Person" scope="prototype" />
@@ -202,7 +202,7 @@
     接口的实现类，Spring都会将其作为一个工厂，但是在IOC容器启动的时候不会
     创建实例，只有在使用的时候才会创建对象。这种方式是spring在创建对象时的
      一种补充，用户可以按照自己需求创建对象，并将其交由spring IOC进行管理。
-     自己用的时候用的不多-->
+     自己用的时候用的不多。懒加载-->
     <bean id="myBeanFactory" class="com.lisz.factory.MyFactoryBean" />
 
     <!-- 生命周期方法调用
@@ -210,7 +210,8 @@
     destroy-method：在容器关闭的时候会调用这里指定的销毁方法
     要强制转换：((ClassPathXmlApplicationContext)context).close();
     才能调用close()，看到destroy方法的调用结果.如果scope是singleton，初始化
-    和销毁方法都会被调用，如果是scope是prototype，则只会调用初始化方法-->
+    和销毁方法都会被调用，如果是scope是prototype，则只会调用初始化方法，
+    不会调用destroy方法-->
     <bean id="person12" class="com.lisz.bean.Person" init-method="init" destroy-method="destroy">
         <property name="id" value="4" />
         <property name="name" value="aaa" />

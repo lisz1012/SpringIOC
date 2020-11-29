@@ -19,7 +19,7 @@ public class MyFactoryBean implements FactoryBean<Person> {
 
     @Override
     public boolean isSingleton() {
-        //不论是不是单例，都是时候用什么时候创建产品对象
+        //不论是不是单例，都是什么时候用什么时候创建产品对象
         return true;
     }
 }
