@@ -130,6 +130,7 @@
                 </entry>
             </map>
         </property>
+        // 类似解析db.properties文件
         <property name="properties">
             <props>
                 <prop key="a">A</prop>
