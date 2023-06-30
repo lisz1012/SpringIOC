@@ -8,7 +8,7 @@
        http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.springframework.org/schema/context
        http://www.springframework.org/schema/context/spring-context.xsd">
-    <!-- xml麻烦，但是真中配置方式比较完整 -->
+    <!-- xml麻烦，但是这种配置方式比较完整 -->
     <!-- 根据属性值设定的时候，name的名称取决于set方法后面的Xxx首字母小写的名称 -->
     <!-- 日常工作中一般使用name的方式，很少使用index和type的方式，但要注意各种情况会出现的问题 -->
     <!-- name表示参数面，value表示实际的具体值，type表示值的类型，index表示在constructor中的下标，从0开始 -->
