@@ -50,7 +50,7 @@
         <constructor-arg value="21" index="2"/>
         <constructor-arg value="2020/01/21" />
     </bean>
-    <!-- 两个构造方法参数个数相同的话，会覆盖，避免覆盖，在value后面再写type，指定参数类型，id一般用Integer而不是int -->
+    <!-- 两个构造方法参数个数相同的话，会覆盖， 想避免覆盖，则要在value后面再写type，指定参数类型，id一般用Integer而不是int -->
     <bean id="person6" class="com.lisz.bean.Person">
         <constructor-arg value="5" />
         <constructor-arg value="abc" />
