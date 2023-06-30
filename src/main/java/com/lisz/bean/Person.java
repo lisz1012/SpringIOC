@@ -17,7 +17,7 @@ public class Person {
     private Properties properties;
 
     // 当从从其中获取对象的时候，最好是保留无参数的构造方法，因为Spring是通过反射初始化bean的
-    // 在容器创建完成之前就创建好了（懒加载先不考虑）
+    // 在容器创建完成之前就创建好了（懒加载先不考虑）!
     public Person() {
         System.out.println("Person 被创建");
     }
