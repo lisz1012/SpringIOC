@@ -187,7 +187,7 @@
           如果是prototype作用域，每次是在需要用到新对象的时候才会创建-->
     <bean id="person10" class="com.lisz.bean.Person" scope="prototype" />
 
-    <!-- 静态工厂方法创建类 静态工厂比较死板单一 -->
+    <!-- 静态工厂方法创建类 静态工厂比较死板单一! -->
     <bean id="staticPerson" class="com.lisz.factory.PersonStaticFactory" factory-method="getInstance">
         <constructor-arg value="zhangsan"/>
     </bean>
