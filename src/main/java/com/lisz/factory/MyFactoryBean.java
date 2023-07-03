@@ -3,6 +3,9 @@ package com.lisz.factory;
 import com.lisz.bean.Person;
 import org.springframework.beans.factory.FactoryBean;
 
+/**
+ * 在 ioc.xml 中有<bean id="myBeanFactory" class="com.lisz.factory.MyFactoryBean" />
+ */
 public class MyFactoryBean implements FactoryBean<Person> {
     @Override
     public Person getObject() throws Exception {
