@@ -51,21 +51,23 @@ public class IOCTest {
         //System.out.println(myBeanFactoryPerson);
         Person person12 = context.getBean("person12", Person.class);
         System.out.println(person12);
-        DruidDataSource dataSource = context.getBean("dataSource", DruidDataSource.class);
-        System.out.println(dataSource);
-        System.out.println(dataSource.getConnection());
-        DruidDataSource dataSource2 = context.getBean("dataSource2", DruidDataSource.class);
-        System.out.println(dataSource2);
-        System.out.println(dataSource2.getConnection());
 
-        Person person13 = context.getBean("person13", Person.class);
-        System.out.println(person13);
 
-        Person person14 = context.getBean("person14", Person.class);
-        System.out.println(person14);
-
-        Person person15 = context.getBean("person15", Person.class);
-        System.out.println(person15);
+//        DruidDataSource dataSource = context.getBean("dataSource", DruidDataSource.class);
+//        System.out.println(dataSource);
+//        System.out.println(dataSource.getConnection());
+//        DruidDataSource dataSource2 = context.getBean("dataSource2", DruidDataSource.class);
+//        System.out.println(dataSource2);
+//        System.out.println(dataSource2.getConnection());
+//
+//        Person person13 = context.getBean("person13", Person.class);
+//        System.out.println(person13);
+//
+//        Person person14 = context.getBean("person14", Person.class);
+//        System.out.println(person14);
+//
+//        Person person15 = context.getBean("person15", Person.class);
+//        System.out.println(person15);
 
         ((ClassPathXmlApplicationContext)context).close();
     }

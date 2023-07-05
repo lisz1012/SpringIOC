@@ -130,7 +130,7 @@
                 </entry>
             </map>
         </property>
-        // 类似解析db.properties文件
+        <!--类似解析db.properties文件-->
         <property name="properties">
             <props>
                 <prop key="a">A</prop>
@@ -212,7 +212,7 @@
     要强制转换：((ClassPathXmlApplicationContext)context).close();
     才能调用close()，看到destroy方法的调用结果.如果scope是singleton，初始化
     和销毁方法都会被调用，如果是scope是prototype，则只会调用初始化方法，
-    不会调用destroy方法-->
+    不会调用destroy方法, 尽管((ClassPathXmlApplicationContext)context).close();被调用-->
     <bean id="person12" class="com.lisz.bean.Person" init-method="init" destroy-method="destroy">
         <property name="id" value="4" />
         <property name="name" value="aaa" />
